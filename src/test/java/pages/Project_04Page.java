@@ -8,6 +8,7 @@ import utils.Driver;
 import java.util.List;
 
 public class Project_04Page {
+
     public Project_04Page(){
         PageFactory.initElements(Driver.getDriver(), this);
     }
@@ -20,7 +21,7 @@ public class Project_04Page {
     public List<WebElement>  inventoryTableHeader;
 
     @FindBy(id = "product_table")
-    public WebElement inventoryTable;
+    public WebElement table;
 
     @FindBy(id = "add_product_btn")
     public WebElement addProductButton;
@@ -39,23 +40,20 @@ public class Project_04Page {
     @FindBy(css = ".delete")
     public WebElement xButton;
 
-    @FindBy(css = "label[for='product_quantity']")
-    public WebElement productQuantityLabel;
+  //  @FindBy(id = "quantity")
+   // public WebElement quantityInputBox;
 
-    @FindBy(id = "quantity")
-    public WebElement quantityInputBox;
+    @FindBy(css = ".modal label")
+    public List<WebElement> labels;
 
-    @FindBy(css = "label[for='product_name']")
-    public WebElement productNameLabel;
+    @FindBy(css = ".input")
+    public List<WebElement> productDetails;
 
-    @FindBy(id = "product")
-    public WebElement productInputBox;
+   // @FindBy(id = "product")
+   // public WebElement productInputBox;
 
-    @FindBy(css = "label[for='product_price']")
-    public WebElement productPriceLabel;
-
-    @FindBy(id = "price")
-    public WebElement priceInputBox;
+   // @FindBy(id = "price")
+   // public WebElement priceInputBox;
 
     @FindBy(id = "submit")
     public WebElement submitButton;

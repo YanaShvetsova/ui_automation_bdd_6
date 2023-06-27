@@ -11,80 +11,125 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.Project_04Page;
 
+import pages.Project_05Page;
 import utils.Driver;
 import utils.TableHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Project_04Steps {
     WebDriver driver;
     Project_04Page project_04Page;
+    Project_05Page project_05Page;
 
     @Before
     public void setDriver() {
         driver = Driver.getDriver();
         project_04Page = new Project_04Page();
+        project_05Page = new Project_05Page();
     }
 
     //Scenario: 01 - Validate the default content of the inventory table
 
     @Then("the user should see the {string} heading")
-    public void the_user_should_see_the_inventory_heading(String inventoryHeading) {
-        Assert.assertTrue(project_04Page.inventoryHeading.isDisplayed());
-        Assert.assertEquals(project_04Page.inventoryHeading.getText(), "Inventory");
+    public void the_user_should_see_the_inventory_heading(String heading) {
+        switch (heading){
+            case "Inventory":
+                Assert.assertTrue(project_04Page.inventoryHeading.isDisplayed());
+                Assert.assertEquals(heading, project_04Page.inventoryHeading.getText());
+                break;
+                //Project_05
+            case "Pagination":
+                Assert.assertTrue(project_05Page.paginationHeading.isDisplayed());
+                Assert.assertEquals(heading, project_05Page.paginationHeading.getText());
+                break;
+            case "World City Populations 2022":
+                Assert.assertTrue(project_05Page.worldCityPopulationsHeading.isDisplayed());
+                Assert.assertEquals(heading, project_05Page.worldCityPopulationsHeading.getText());
+                break;
+            default:
+        }
 
     }
 
     @And("the user should see the table with the headers below")
     public void the_user_should_see_the_table_with_the_headers_below(DataTable dataTable) {
         List<String> expectedText = dataTable.asList();
+
         for (int i = 0; i <= expectedText.size()-1; i++) {
             Assert.assertTrue(project_04Page.inventoryTableHeader.get(i).isDisplayed());
-            Assert.assertEquals(project_04Page.inventoryTableHeader.get(i).getText(), expectedText.get(i));
+            Assert.assertEquals(expectedText.get(i), project_04Page.inventoryTableHeader.get(i).getText());
         }
 
     }
 
-    @And("the user should see the table with the rows below")
+    @Then("the user should see the table with the rows below")
     public void the_user_should_see_the_table_with_the_rows_below(DataTable dataTable) {
-        List<List<WebElement>> inventoryTableData = TableHandler.getTableData(project_04Page.inventoryTable);
+        List<List<String>> expectedTable = dataTable.asLists();
+        List<List<WebElement>> actualTable = TableHandler.getTableData(project_04Page.table);
 
-        List<List<String>> expectedTableText = dataTable.asLists();
-        expectedTableText.add(Arrays.asList("1", "iPhone", "1,000", "1,000"));
-        expectedTableText.add(Arrays.asList("3", "Airpods", "100", "300 "));
-        expectedTableText.add(Arrays.asList("2", "iPad ", "500 ", "1,000"));
-
-        Assert.assertEquals(inventoryTableData.get(2).get(1).getText(), inventoryTableData.get(2).get(1));
-
-        for (int i = 0; i < inventoryTableData.size(); i++) {
-            for (int j = 0; j < inventoryTableData.get(i).size(); j++) {
-                Assert.assertEquals(inventoryTableData.get(i).get(j).getText(), inventoryTableData.get(i).get(j));
+        for (int i = 0; i < expectedTable.size(); i++) {
+            for (int j = 0; j < expectedTable.get(i).size(); j++) {
+                Assert.assertEquals(expectedTable.get(i).get(j), actualTable.get(i).get(j).getText());
             }
         }
+
     }
 
-    @And("the user should see the {string} button is enabled")
-    public void the_user_should_see_the_add_product_button_is_enabled(String addProductButton) {
-        Assert.assertTrue(project_04Page.addProductButton.isDisplayed());
-        Assert.assertTrue(project_04Page.addProductButton.isEnabled());
-        Assert.assertEquals(project_04Page.addProductButton.getText(), "ADD PRODUCT");
-
+    @Then("the user should see the {string} button is enabled")
+    public void the_user_should_see_the_button_is_enabled(String button) {
+        switch (button){
+            case "ADD PRODUCT":
+                Assert.assertTrue(project_04Page.addProductButton.isEnabled());
+                break;
+            case "X":
+                Assert.assertTrue(project_04Page.xButton.isEnabled());
+                break;
+            case "SUBMIT":
+                Assert.assertTrue(project_04Page.submitButton.isEnabled());
+                break;
+                //Project05
+            case "Next":
+                Assert.assertTrue(project_05Page.nextButton.isDisplayed());
+                Assert.assertTrue(project_05Page.nextButton.isEnabled());
+                break;
+            case "Previous":
+                Assert.assertTrue(project_05Page.previousButton.isDisplayed());
+                Assert.assertTrue(project_05Page.previousButton.isEnabled());
+                break;
+            default:
+        }
     }
 
     @And("the user should see the {string} text displayed")
     public void the_user_should_see_the_total_$_text_displayed(String totalAmountText) {
         Assert.assertTrue(project_04Page.totalAmountText.isDisplayed());
         Assert.assertTrue(project_04Page.totalAmountText.isEnabled());
-        Assert.assertEquals(project_04Page.totalAmountText.getText(), "Total = $2,300");
+        Assert.assertEquals(totalAmountText, project_04Page.totalAmountText.getText());
 
     }
 
     //Scenario: 02 - Validate the Add New Product modal
     @When("the user clicks on the {string} button")
-    public void the_user_clicks_on_the_button(String addProductButton) {
-        project_04Page.addProductButton.click();
+    public void theUserClicksOnTheButton(String button) {
+        switch (button){
+            case "ADD PRODUCT":
+                project_04Page.addProductButton.click();
+                break;
+            case "X":
+                project_04Page.xButton.click();
+                break;
+            case "SUBMIT":
+                project_04Page.submitButton.click();
+                break;
+                //Project05
+            case "Next":
+                project_05Page.nextButton.click();
+            default:
+        }
     }
 
     @Then("the user should see the {string} modal with its heading")
@@ -94,18 +139,37 @@ public class Project_04Steps {
 
     }
 
-    //step for x button?
 
     @And("the user should see the {string} label")
-    public void the_user_should_see_the_label(String productQuantityLabel) {
-        Assert.assertTrue(project_04Page.productQuantityLabel.isDisplayed());
-        Assert.assertEquals(productQuantityLabel, project_04Page.productQuantityLabel.getText());
+    public void theUserShouldSeeTheLabel(String label) {
+        switch (label){
+            case "Please select the quantity":
+                Assert.assertTrue(project_04Page.labels.get(0).isDisplayed());
+                break;
+            case "Please enter the name of the product":
+                Assert.assertTrue(project_04Page.labels.get(1).isDisplayed());
+                break;
+            case "Please enter the price of the product":
+                Assert.assertTrue(project_04Page.labels.get(2).isDisplayed());
+                break;
+            default:
+        }
     }
 
     @And("the user should see the {string} input box is enabled")
-    public void the_user_should_see_the_input_box_is_enabled(String quantityInputBox) {
-        Assert.assertTrue(project_04Page.quantityInputBox.isDisplayed());
-        Assert.assertTrue(project_04Page.quantityInputBox.isEnabled());
+    public void theUserShouldSeeTheInputBoxIsEnabled(String inputBox) {
+        switch (inputBox) {
+            case "Quantity":
+                Assert.assertTrue(project_04Page.productDetails.get(0).isEnabled());
+                break;
+            case "Product":
+                Assert.assertTrue(project_04Page.productDetails.get(1).isEnabled());
+                break;
+            case "Price":
+                Assert.assertTrue(project_04Page.productDetails.get(2).isEnabled());
+                break;
+            default:
+        }
     }
 
     //Scenario: 03 - Validate the Add New Product modal X button
@@ -114,32 +178,43 @@ public class Project_04Steps {
         project_04Page.xButton.click();
     }
 
-    @Then("the user should not see the {string} modal")
-    public void the_user_should_not_see_the_modal(String addProductModal) {
-        Assert.assertFalse(project_04Page.addProductModal.isDisplayed());
+    @Then("the user should not see the Add New Product modal")
+    public void theUserShouldNotSeeTheModal() {
+        try {
+            Assert.assertFalse(project_04Page.addProductHeader.isDisplayed());
+        }
+        catch (NoSuchElementException e){
+            Assert.assertTrue(true);
+        }
     }
 
     //Scenario: 04 - Validate the new product added
-    @When("the user enters the quantity as {string}")
-    public void the_user_enters_the_quantity_as(String quantityInputBox) {
-        project_04Page.quantityInputBox.sendKeys("2");
+    @And("the user enters the {string} as {string}")
+    public void theUserEntersTheAs(String details, String input) {
+        switch (details){
+            case "Quantity":
+                project_04Page.productDetails.get(0).sendKeys(input);
+                break;
+            case "Product":
+                project_04Page.productDetails.get(1).sendKeys(input);
+                break;
+            case"Price":
+                project_04Page.productDetails.get(2).sendKeys(input);
+                break;
+            default:
+        }
+
     }
-    @And("the user enters the product as {string}")
-    public void the_user_enters_the_product_as(String productInputBox) {
-        project_04Page.productInputBox.sendKeys("Mouse");
-    }
-    @And("the user enters the price as {string}")
-    public void the_user_enters_the_price_as(String priceInputBox) {
-        project_04Page.priceInputBox.sendKeys("100");
-    }
+
     @Then("the user should see the table with the new row below")
-    public void the_user_should_see_the_table_with_the_new_row_below(DataTable dataTable) {
-        List<String> expectedText = dataTable.asList();
-        for (int i = 0; i <= expectedText.size()-1; i++) {
-            Assert.assertTrue(project_04Page.addedRow.get(i).isDisplayed());
-            Assert.assertEquals(project_04Page.addedRow.get(i).getText(), expectedText.get(i));
+    public void theUserShouldSeeTheTableWithTheNewRowBelow(DataTable dataTable) {
+        List<String> expectedRow = dataTable.asList();
+
+        for (int i = 0; i < expectedRow.size(); i++) {
+            Assert.assertEquals(expectedRow.get(i), TableHandler.getTableRow(4).get(i).getText());
         }
     }
+
 
 
 

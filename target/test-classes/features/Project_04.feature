@@ -37,14 +37,14 @@ Feature: Inventory table functionality
       When the user clicks on the "ADD PRODUCT" button
       Then the user should see the "Add New Product" modal with its heading
       When the user clicks on the "X" button
-      Then the user should not see the "Add New Product" modal
+      Then the user should not see the Add New Product modal
 
   @newProductAdded
   Scenario: 04 - Validate the new product added
       When the user clicks on the "ADD PRODUCT" button
-      And the user enters the quantity as "2"
-      And the user enters the product as "Mouse"
-      And the user enters the price as "100"
+    And the user enters the "Quantity" as "2"
+    And the user enters the "Product" as "Mouse"
+    And the user enters the "Price" as "100"
       And the user clicks on the "SUBMIT" button
       Then the user should see the table with the new row below
         | 2 |
