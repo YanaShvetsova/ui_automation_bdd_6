@@ -1,3 +1,4 @@
+@Project05
 Feature: Pagination page functionality
 
   Background:
@@ -20,23 +21,34 @@ Feature: Pagination page functionality
     And the user should see the "Next" button is disabled
 
   @CitiesContent
-  Scenario: 03 - Validate the Pagination Cities content
+  Scenario: Test Case 03 - Validate the Pagination Cities content
+    Given user navigates to "https://techglobal-training.com/frontend/project-5"
     Then the user should see "Tokyo" City with the info below and an image
+      | City: Tokyo            |
+      | Country: Japan         |
+      | Population: 37,435,191 |
 
-      |City: Tokyo| Country: Japan| Population: 37,435,191|
     When the user clicks on the "Next" button
     Then the user should see "Delhi" City with the info below and an image
+      | City: Delhi            |
+      | Country: India         |
+      | Population: 29,399,141 |
 
-      |City: Delhi| Country: India| Population: 29,399,141|
     When the user clicks on the "Next" button
     Then the user should see "Shangai" City with the info below and an image
+      | City: Shangai          |
+      | Country: China         |
+      | Population: 26,317,104 |
 
-      |City: Shangai| Country: China| Population: 26,317,104|
     When the user clicks on the "Next" button
     Then the user should see "Sao Paulo" City with the info below and an image
 
-      |City: Sao Paulo| Country: Brasil| Population: 21,846,507|
+      | City: Sao Paulo        |
+      | Country: Brasil        |
+      | Population: 21,846,507 |
+
     When the user clicks on the "Next" button
     Then the user should see "Mexico City" City with the info below and an image
-
-      |City: Mexico City| Country: Mexico| Population: 21,671,908|
+      | City: Mexico City      |
+      | Country: Mexico        |
+      | Population: 21,671,908 |

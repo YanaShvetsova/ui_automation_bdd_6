@@ -5,6 +5,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Driver;
 
+import java.util.List;
+
 public class Project_05Page {
 
     public Project_05Page(){
@@ -27,20 +29,18 @@ public class Project_05Page {
     @FindBy(id = "next")
     public WebElement nextButton;
 
-    //Scenario 03
-    //@FindBy(css = "Pagination_pagBodyData__up2c0")
-    //public WebElement cityInfo;
+    @FindBy(css = ".city_image")
+    public WebElement cityImage;
 
-    @FindBy(css = ".city_info")
-    public WebElement cityInfo;
-
-    @FindBy(css = ".country_info")
-    public WebElement countryInfo;
-
-    @FindBy(css = ".population_info")
-    public WebElement populationInfo;
+    @FindBy(css = "p[class*='info']")
+    public List<WebElement> cityInfo;
 
 
+    public void clickNextButton(){
+        while(nextButton.isEnabled()){
+            nextButton.click();
+        }
+    }
 
 
 

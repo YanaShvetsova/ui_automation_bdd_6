@@ -1,6 +1,7 @@
 package steps;
 
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,6 +9,8 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import pages.Project_05Page;
 import utils.Driver;
+
+import java.util.List;
 
 public class Project_05Steps {
 
@@ -45,19 +48,19 @@ public class Project_05Steps {
 
     @When("the user clicks on the {string} button till it becomes disabled")
     public void the_user_clicks_on_the_button_till_it_becomes_disabled(String nextButton) {
-        do {
-            project_05Page.nextButton.click();
-        } while (project_05Page.nextButton.isEnabled());
-        Assert.assertFalse(project_05Page.nextButton.isEnabled());
+        project_05Page.clickNextButton();
 
     }
 
     //Scenario 03
-    @Then("the user should see City as {string}, Country as {string} and Population {string}  with the info below and an image")
-    public void the_user_should_see_city_as_country_as_and_population_with_the_info_below_and_an_image(String city, String country, String population) {
-        Assert.assertEquals(city, project_05Page.cityInfo.getText());
-        Assert.assertEquals(country, project_05Page.countryInfo.getText());
-        Assert.assertEquals(population, project_05Page.populationInfo.getText());
+    @Then("the user should see {string} City with the info below and an image")
+    public void the_user_should_see_city_with_the_info_below_and_an_image(String string, DataTable dataTable) {
+        List<String> expectedText = dataTable.asList();
+
+        for (int i = 0; i < expectedText.size(); i++) {
+            Assert.assertTrue(project_05Page.cityImage.isDisplayed());
+            Assert.assertEquals(expectedText.get(i), project_05Page.cityInfo.get(i).getText());
+        }
 
     }
 }

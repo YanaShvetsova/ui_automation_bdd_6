@@ -23,36 +23,11 @@ import java.util.NoSuchElementException;
 public class Project_04Steps {
     WebDriver driver;
     Project_04Page project_04Page;
-    Project_05Page project_05Page;
 
     @Before
     public void setDriver() {
         driver = Driver.getDriver();
         project_04Page = new Project_04Page();
-        project_05Page = new Project_05Page();
-    }
-
-    //Scenario: 01 - Validate the default content of the inventory table
-
-    @Then("the user should see the {string} heading")
-    public void the_user_should_see_the_inventory_heading(String heading) {
-        switch (heading){
-            case "Inventory":
-                Assert.assertTrue(project_04Page.inventoryHeading.isDisplayed());
-                Assert.assertEquals(heading, project_04Page.inventoryHeading.getText());
-                break;
-                //Project_05
-            case "Pagination":
-                Assert.assertTrue(project_05Page.paginationHeading.isDisplayed());
-                Assert.assertEquals(heading, project_05Page.paginationHeading.getText());
-                break;
-            case "World City Populations 2022":
-                Assert.assertTrue(project_05Page.worldCityPopulationsHeading.isDisplayed());
-                Assert.assertEquals(heading, project_05Page.worldCityPopulationsHeading.getText());
-                break;
-            default:
-        }
-
     }
 
     @And("the user should see the table with the headers below")
@@ -79,30 +54,7 @@ public class Project_04Steps {
 
     }
 
-    @Then("the user should see the {string} button is enabled")
-    public void the_user_should_see_the_button_is_enabled(String button) {
-        switch (button){
-            case "ADD PRODUCT":
-                Assert.assertTrue(project_04Page.addProductButton.isEnabled());
-                break;
-            case "X":
-                Assert.assertTrue(project_04Page.xButton.isEnabled());
-                break;
-            case "SUBMIT":
-                Assert.assertTrue(project_04Page.submitButton.isEnabled());
-                break;
-                //Project05
-            case "Next":
-                Assert.assertTrue(project_05Page.nextButton.isDisplayed());
-                Assert.assertTrue(project_05Page.nextButton.isEnabled());
-                break;
-            case "Previous":
-                Assert.assertTrue(project_05Page.previousButton.isDisplayed());
-                Assert.assertTrue(project_05Page.previousButton.isEnabled());
-                break;
-            default:
-        }
-    }
+
 
     @And("the user should see the {string} text displayed")
     public void the_user_should_see_the_total_$_text_displayed(String totalAmountText) {
@@ -110,26 +62,6 @@ public class Project_04Steps {
         Assert.assertTrue(project_04Page.totalAmountText.isEnabled());
         Assert.assertEquals(totalAmountText, project_04Page.totalAmountText.getText());
 
-    }
-
-    //Scenario: 02 - Validate the Add New Product modal
-    @When("the user clicks on the {string} button")
-    public void theUserClicksOnTheButton(String button) {
-        switch (button){
-            case "ADD PRODUCT":
-                project_04Page.addProductButton.click();
-                break;
-            case "X":
-                project_04Page.xButton.click();
-                break;
-            case "SUBMIT":
-                project_04Page.submitButton.click();
-                break;
-                //Project05
-            case "Next":
-                project_05Page.nextButton.click();
-            default:
-        }
     }
 
     @Then("the user should see the {string} modal with its heading")
